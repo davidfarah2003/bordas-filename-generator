@@ -2,9 +2,9 @@ import itertools
 
 def k(value):
     url = "https://biblio.editions-bordas.fr/epubs/BORDAS/bibliomanuels/ressources/"
-    num_complet = "9782047337646"
-    num_abbr = "733764_"
-    nom_livre = "INDICE_Tle_spe"
+    num_complet = "9782047337639"
+    num_abbr = "733763_"
+    nom_livre = ["ESPACE_Tle", ""]
     additional_ldp = ["livre-du-professeur", "livre-prof"]
     mots_cles = ['integral', 'INTEGRAL', 'Integral', 'complet', 'COMPLET']
 
@@ -67,7 +67,7 @@ if __name__ == '__main__':
                 ldp_list.append(term)
     print(ldp_list)
 
-    params = [ldp_list, [k("nom_livre")], k("mots")]
+    params = [ldp_list, k("nom_livre"), k("mots")]
     params = permutation(params)
     list_of_l = []
     for param in params:
@@ -79,11 +79,11 @@ if __name__ == '__main__':
 
     final_list1 = []
     for aha in final_list2:
-        word = k("num_")+ aha
+        word = k("num_") + aha + ".pdf"
         final_list1.append(word)
     final_list = [final_list1, final_list2]
     final_list = list(itertools.chain.from_iterable(final_list))
-    print(len(final_list))
+    print("Amount of possible combinations:", len(final_list))
 
     with open("filenames.txt", mode="w") as outfile:
         for phrase in final_list:

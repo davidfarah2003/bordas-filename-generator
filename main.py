@@ -3,10 +3,10 @@ import itertools
 def k(value):
     url = "https://biblio.editions-bordas.fr/epubs/BORDAS/bibliomanuels/ressources/"
     num_complet = "9782047337646"
-    num_abbr = "733764"
+    num_abbr = "733764_"
     nom_livre = "INDICE_Tle_spe"
     additional_ldp = ["livre-du-professeur", "livre-prof"]
-    mots_cles = ['integral', 'int', 'INT', 'Integral', 'complet', 'COMPLET']
+    mots_cles = ['integral', 'INTEGRAL', 'Integral', 'complet', 'COMPLET']
 
     if value == "nom_livre":
         return nom_livre
@@ -31,7 +31,15 @@ def rephrase(possibilities):
         element_one = tuplez[0]
         element_two = tuplez[1]
         element_three = tuplez[2]
+
         phrase = f"{element_one}_{element_two}_{element_three}"
+        if "__" in phrase:
+            phrase = phrase.replace("__", "_")
+        if phrase[0] == "_":
+            phrase = phrase[1:]
+        if phrase[len(phrase)-1] == "_":
+            phrase = phrase[:(len(phrase)-1)]
+
         phrase_list.append(phrase)
     return phrase_list
 
@@ -51,6 +59,7 @@ def permutation(lst):
 
 
 if __name__ == '__main__':
+
     ldp_list = full_iter("ldp")
     if k("ldp+"):
         for term in k("ldp+"):
@@ -66,9 +75,23 @@ if __name__ == '__main__':
         list_of_names = rephrase(possibilities)
         list_of_l.append(list_of_names)
 
-    final_list = list(itertools.chain.from_iterable(list_of_l))
+    final_list2 = list(itertools.chain.from_iterable(list_of_l))
+
+    final_list1 = []
+    for aha in final_list2:
+        word = k("num_")+ aha
+        final_list1.append(word)
+    final_list = [final_list1, final_list2]
+    final_list = list(itertools.chain.from_iterable(final_list))
     print(len(final_list))
 
     with open("filenames.txt", mode="w") as outfile:
         for phrase in final_list:
+            outfile.write("%s\n" % phrase)
+
+    base_link = k("url") + k("num") + "/"
+
+    with open("links.txt", mode="w") as outfile:
+        for phrase in final_list:
+            phrase = base_link + phrase + ".pdf"
             outfile.write("%s\n" % phrase)

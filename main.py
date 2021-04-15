@@ -2,11 +2,11 @@ import itertools
 
 def k(value):
     url = "https://biblio.editions-bordas.fr/epubs/BORDAS/bibliomanuels/ressources/"
-    num_complet = "9782047337639"
-    num_abbr = "733763_"
-    nom_livre = ["ESPACE_Tle", ""]
-    additional_ldp = ["livre-du-professeur", "livre-prof"]
-    mots_cles = ['integral', 'INTEGRAL', 'Integral', 'complet', 'COMPLET']
+    num_complet = "9782047337592"
+    num_abbr = "04733780_"
+    nom_livre = ["SES_TLE", "SES_Tle", ""]
+    additional_ldp = ["livre-du-professeur", "livre-prof", '']
+    mots_cles = ['', 'integral', 'Integral', 'INTEGRAL', 'complet']
 
     if value == "nom_livre":
         return nom_livre

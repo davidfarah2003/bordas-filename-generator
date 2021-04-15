@@ -23,7 +23,7 @@ def check_code(urls):
             print(e.code, ":", url)
 
 
-splitted = np.array_split(urls, 7)
+splitted = np.array_split(urls, 10)
 for array in splitted:
     worker = threading.Thread(target=check_code, args=(array,))
     worker.start()

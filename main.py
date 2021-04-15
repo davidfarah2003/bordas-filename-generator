@@ -5,7 +5,6 @@ def k(value):
     num_complet = "9782047337646"
     num_abbr = "733764"
     nom_livre = "INDICE_Tle_spe"
-    ldp = ["ldp"]
     additional_ldp = ["livre-du-professeur", "livre-prof"]
     mots_cles = ['integral', 'int', 'INT', 'Integral', 'complet', 'COMPLET']
 
@@ -17,8 +16,6 @@ def k(value):
         return num_complet
     elif value == "num_":
         return num_abbr
-    elif value == "ldp":
-        return ldp
     elif value == "ldp+":
         return additional_ldp
     elif value == "mots":
@@ -52,6 +49,7 @@ def permutation(lst):
             l.append([m] + p)
     return l
 
+
 if __name__ == '__main__':
     ldp_list = full_iter("ldp")
     if k("ldp+"):
@@ -64,11 +62,13 @@ if __name__ == '__main__':
     params = permutation(params)
     list_of_l = []
     for param in params:
-        possibilities = list(itertools.product(*param)) #finds all combinations of lists
+        possibilities = list(itertools.product(*param))  # finds all combinations of lists
         list_of_names = rephrase(possibilities)
         list_of_l.append(list_of_names)
 
     final_list = list(itertools.chain.from_iterable(list_of_l))
     print(len(final_list))
-    for phrase in final_list:
-        print(phrase)
+
+    with open("filenames.txt", mode="w") as outfile:
+        for phrase in final_list:
+            outfile.write("%s\n" % phrase)

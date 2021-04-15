@@ -77,11 +77,15 @@ if __name__ == '__main__':
 
     final_list2 = list(itertools.chain.from_iterable(list_of_l))
 
+    final_list0 = []
     final_list1 = []
     for aha in final_list2:
+        word = aha + ".pdf"
+        final_list0.append(word)
         word = k("num_") + aha + ".pdf"
         final_list1.append(word)
-    final_list = [final_list1, final_list2]
+
+    final_list = [final_list1, final_list0]
     final_list = list(itertools.chain.from_iterable(final_list))
     print("Amount of possible combinations:", len(final_list))
 
@@ -93,5 +97,8 @@ if __name__ == '__main__':
 
     with open("links.txt", mode="w") as outfile:
         for phrase in final_list:
-            phrase = base_link + phrase + ".pdf"
+            if ".pdf" in phrase:
+                phrase = base_link + phrase
+            else:
+                phrase = base_link + phrase + '.pdf'
             outfile.write("%s\n" % phrase)
